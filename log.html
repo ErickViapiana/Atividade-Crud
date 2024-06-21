@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Empréstimo de Livro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666666;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            text-align: left;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #0056b3;
+            color: #ffffff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .sidebar h2 {
+                margin-bottom: 20px;
+            }
+
+            .sidebar a {
+                color: #ffffff;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                transition: background-color 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #004080;
+                }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="http://localhost:3000">Home</a>
+        <a href="editora">Cadastrar Editora</a>
+        <a href="cadastrar_autor">Cadastrar Autor</a>
+        <a href="index">Cadastrar Livro</a>
+        <a href="categoria">Categorias</a>
+        <a href="detalhes">Detalhes Livros</a>
+        <a href="reservaa">Reservas</a>
+        <a href="*">Log</a>
+        <a href="*">Emprestimo</a>
+        <!-- Adicione outros links conforme necessário -->
+    </div>
+
+    <div class="container">
+        <h1>Verificar Empréstimo de Livro</h1>
+        <label for="bookName">Nome do Livro:</label>
+        <input type="text" id="bookName" name="bookName">
+        <button onclick="checkBook()">Verificar</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const livros = {
+            'O Senhor dos Anéis': { emprestado: true, devolucao: '2024-07-01', usuario: 'João' },
+            'Harry Potter': { emprestado: false, devolucao: '', usuario: '' },
+            'O Código Da Vinci': { emprestado: true, devolucao: '2024-06-30', usuario: 'Maria' }
+        };
+
+        function checkBook() {
+            const bookName = document.getElementById('bookName').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none'; 
+
+            if (livros[bookName]) {
+                const livro = livros[bookName];
+                if (livro.emprestado) {
+                    resultDiv.innerHTML = `<p class="error">O livro "${bookName}" está emprestado.</p>
+                                               <p>Devolução prevista para: ${livro.devolucao}</p>
+                                               <p>Usuário: ${livro.usuario}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p class="success">O livro "${bookName}" está disponível.</p>`;
+                }
+            } else {
+                resultDiv.innerHTML = `<p class="error">O livro "${bookName}" não foi encontrado.</p>`;
+            }
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
